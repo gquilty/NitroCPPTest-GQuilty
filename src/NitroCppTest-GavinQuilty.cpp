@@ -1,8 +1,8 @@
 // NitroCppTest-GavinQuilty.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
-#include "json.hpp"
+#include "../include/stdafx.h"
+#include "../include/json.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -178,26 +178,27 @@ void createRectangles(json jsonObj) {
 
 void parseJsonFile() {
 	std::cout << " Please enter path or name of file you wish to use: " << std::endl;
+	std::cout << " Type 'exit' to leave the program " << std::endl;
 	std::string fileName;
 	std::getline(std::cin, fileName);
-	std::ifstream jsonFile(fileName);
-	// read a JSON file
-	if(jsonFile) {		
-		json j;
-		jsonFile >> j;
-		createRectangles(j);
+	if (fileName == "exit") {
+		return;
 	}
 	else {
-		std::cout << " Error getting File - please retry or type exit " << std::endl;
-		std::string exit;
-		std::getline(std::cin, exit);
-		if (exit == "exit") {
-			return;
+		std::ifstream jsonFile(fileName);
+		// read a JSON file
+		if (jsonFile) {
+			json j;
+			jsonFile >> j;
+			createRectangles(j);
 		}
 		else {
+			std::cout << " Error getting File" << std::endl;
 			parseJsonFile();
 		}
 	}
+	
+	
 	
 }
 
