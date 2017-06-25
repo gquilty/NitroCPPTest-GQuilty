@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "json.hpp"
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -161,7 +162,7 @@ void detectIntersection() {
 }
 
 void createRectangles(json jsonObj) {
-	if (jsonObj.at("rects").size() < 10) {
+	if (jsonObj.at("rects").size() <= 10) {
 		for (int i = 0; i < jsonObj.at("rects").size(); i++) {
 			rectangle newRectangle;
 			newRectangle.x = jsonObj.at("rects").at(i).at("x");
@@ -175,21 +176,36 @@ void createRectangles(json jsonObj) {
 	}
 }
 
-void parseJsonFile(std::string fileName) {
+void parseJsonFile() {
+	std::cout << " Please enter path or name of file you wish to use: " << std::endl;
+	std::string fileName;
+	std::getline(std::cin, fileName);
+	std::ifstream jsonFile(fileName);
 	// read a JSON file
-	std::ifstream i(fileName);
-	json j;
-	i >> j;
-
-	createRectangles(j);
+	if(jsonFile) {		
+		json j;
+		jsonFile >> j;
+		createRectangles(j);
+	}
+	else {
+		std::cout << " Error getting File - please retry or type exit " << std::endl;
+		std::string exit;
+		std::getline(std::cin, exit);
+		if (exit == "exit") {
+			return;
+		}
+		else {
+			parseJsonFile();
+		}
+	}
+	
 }
 
 int main()
-{
-	parseJsonFile("rect.json");	
+{	
+	parseJsonFile();	
 	detectIntersection();
 	outputMultipleIntersections();
-	//printRectanglesArray();
     return 0;
 }
 
