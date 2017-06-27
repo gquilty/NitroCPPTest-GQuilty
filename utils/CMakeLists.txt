@@ -12,7 +12,7 @@ include (GenerateExportHeader)
 #Bring the headers into the project
 file(GLOB_RECURSE INCLUDES
          RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-         ${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h)
+         ${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h ${CMAKE_CURRENT_SOURCE_DIR}/../include/*.hpp)
          MESSAGE( STATUS "ADDED INCLUDES")
          MESSAGE( STATUS "******************************************")
 
@@ -51,9 +51,44 @@ MESSAGE( STATUS "******************************************")
 #################################################################
 
 #Generate Executable
-# link_directories( ${CMAKE_BINARY_DIR}/bin)
-# set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+link_directories( ${CMAKE_BINARY_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${INCLUDES})
-target_link_libraries (${PROJECT_NAME} ${Boost_LIBRARIES})
-target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )
+
+################################################################
+##                      Build Test Project
+#################################################################
+
+set(TEST_PROJECT_NAME "NitroCPPTest-GavinQuilty_Tests" CXX)
+MESSAGE( STATUS "BUILDING TEST PROJECT: " ${TEST_PROJECT_NAME})
+MESSAGE( STATUS "******************************************")
+project(${TEST_PROJECT_NAME})
+set(CMAKE_BUILD_TYPE Release)
+
+#Bring the headers into the project
+file(GLOB_RECURSE TEST_INCLUDES
+         RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+         ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.h ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.hpp)
+         MESSAGE( STATUS "ADDED TEST INCLUDES")
+         MESSAGE( STATUS "******************************************")
+
+#Bring the source
+file(GLOB_RECURSE TEST_SOURCES
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+		${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.cpp)
+        MESSAGE( STATUS "ADDED TEST SOURCES")
+        MESSAGE( STATUS "******************************************")
+#MESSAGE( STATUS ${CMAKE_CURRENT_SOURCE_DIR}/../tests/main.cpp)
+#MESSAGE( STATUS ${TEST_SOURCES} )
+
+file(GLOB_RECURSE TEST_HEADERS
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.h)
+
+file(GLOB_RECURSE TEST_SOURCES
+        RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../tests/*.cpp)
+
+add_executable(NitroCPPTest-GavinQuilty_Tests ${TEST_SOURCES} ${TEST_HEADERS})
+
+MESSAGE( STATUS "SUCCESS")
+MESSAGE( STATUS "******************************************")

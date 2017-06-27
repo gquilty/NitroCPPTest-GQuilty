@@ -1,8 +1,7 @@
 // NitroCppTest-GavinQuilty.cpp : Defines the entry point for the console application.
 //
 
-#include "../include/stdafx.h"
-#include "../include/NitroCPP.h"
+#include "NitroCPP.h"
 
 // for convenience
 using json = nlohmann::json;
@@ -17,6 +16,7 @@ struct rectangle {
 	int height;
 	std::vector<int> connections;
 };
+
 
 
 NitroCPP::NitroCPP() {
@@ -206,8 +206,8 @@ bool NitroCPP::verifyJson(json jsonObj) {
 		if (x == -1 || y == -1 || w == -1 || h == -1) {
 			return false;
 		}
-
 	}
+
 	return true;
 
 }
