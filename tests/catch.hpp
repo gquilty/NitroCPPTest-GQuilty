@@ -11297,6 +11297,9 @@ int main (int argc, char * argv[]) {
 #endif
 
     int result = Catch::Session().run( argc, argv );
+	printf("Please close window to exit tests");
+	std::string s;
+	std::cin >> s;
     return ( result < 0xff ? result : 0xff );
 }
 

@@ -62,7 +62,7 @@ TEST_CASE("Test createRectangles with 0 vlaues") {
 	json j = {
 		{ "rects", {} }
 	};
-	std::cout << "TESTCASE : Please type exit" << std::endl;
+	std::cout << "*** TESTCASE : Please type exit *** " << std::endl;
 	NitroCPP *nitro = new NitroCPP();
 	nitro->createRectangles(j);
 	

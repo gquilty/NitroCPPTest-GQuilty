@@ -7,4 +7,8 @@ int main()
 	nitro->parseJsonFile();
 	nitro->detectIntersection();
 	nitro->outputMultipleIntersections();
+	std::cout << "Press any key to leave program " << std::endl;
+	std::string exit;
+	std::getline(std::cin, exit);
+
 }
